@@ -1,15 +1,12 @@
-> ⚠️ Disclaimer: this repository is not actively maintained. If you are interested in maintaining it, please [contact me](https://github.com/hacdias/webdav/issues/144).
-
 # webdav
 
-![Build](https://github.com/hacdias/webdav/workflows/Tests/badge.svg)
-[![Go Report Card](https://goreportcard.com/badge/github.com/hacdias/webdav?style=flat-square)](https://goreportcard.com/report/hacdias/webdav)
-[![Version](https://img.shields.io/github/release/hacdias/webdav.svg?style=flat-square)](https://github.com/hacdias/webdav/releases/latest)
-[![Docker Pulls](https://img.shields.io/docker/pulls/hacdias/webdav)](https://hub.docker.com/r/hacdias/webdav)
+![Build](https://github.com/colorsakura/webdav/workflows/Tests/badge.svg)
+[![Go Report Card](https://goreportcard.com/badge/github.com/colorsakura/webdav?style=flat-square)](https://goreportcard.com/report/colorsakura/webdav)
+[![Version](https://img.shields.io/github/release/colorsakura/webdav.svg?style=flat-square)](https://github.com/colorsakura/webdav/releases/latest)
 
 ## Install
 
-Please refer to the [Releases page](https://github.com/hacdias/webdav/releases) for more information. There, you can either download the binaries or find the Docker commands to install WebDAV.
+Please refer to the [Releases page](https://github.com/colorsakura/webdav/releases) for more information. There, you can either download the binaries or find the Docker commands to install WebDAV.
 
 ## Usage
 
