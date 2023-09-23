@@ -6,9 +6,11 @@ on:
   push:
     branches:
       - main
+      - dev
   pull_request:
     branches:
       - main
+      - dev
 
 jobs:
   test:
@@ -22,13 +24,11 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-    - name: Install Go
+    - name: Setup Go
+      uses: actions/checkout@v4
       uses: actions/setup-go@v4
       with:
         go-version: ${{ matrix.go }}
-
-    - name: Checkout code
-      uses: actions/checkout@v4
 
     - name: Print Go version and environment
       id: vars
