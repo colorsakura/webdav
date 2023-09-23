@@ -24,43 +24,32 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-    - name: Setup Go
-      uses: actions/checkout@v4
-      uses: actions/setup-go@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v4
       with:
         go-version: ${{ matrix.go }}
+      - run: go version && go env
 
-    - name: Print Go version and environment
-      id: vars
-      run: |
-        printf "Using go at: $(which go)\n"
-        printf "Go version: $(go version)\n"
-        printf "\n\nGo environment:\n\n"
-        go env
-        printf "\n\nSystem environment:\n\n"
-        env
-        echo "::set-output name=go_cache::$(go env GOCACHE)"
+      - name: Cache the build cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.vars.outputs.go_cache }}
+          key: ${{ runner.os }}-${{ matrix.go }}-go-ci-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.go }}-go-ci
 
-    - name: Cache the build cache
-      uses: actions/cache@v3
-      with:
-        path: ${{ steps.vars.outputs.go_cache }}
-        key: ${{ runner.os }}-${{ matrix.go }}-go-ci-${{ hashFiles('**/go.sum') }}
-        restore-keys: |
-          ${{ runner.os }}-${{ matrix.go }}-go-ci
+      - name: Get dependencies
+        run: go get -v -t -d ./...
 
-    - name: Get dependencies
-      run: go get -v -t -d ./...
+      # To ensure the project compiles, and not just its tests are passing
+      - name: Build webdav
+        working-directory: .
+        env:
+          CGO_ENABLED: 0
+        run: go build -trimpath -ldflags="-w -s" -v
 
-    # To ensure the project compiles, and not just its tests are passing
-    - name: Build webdav
-      working-directory: .
-      env:
-        CGO_ENABLED: 0
-      run: go build -trimpath -ldflags="-w -s" -v
-
-    - name: Run tests
-      run: go test -v -race ./...
+      - name: Run tests
+        run: go test -v -race ./...
 
   golangci-lint:
     name: runner / golangci-lint
